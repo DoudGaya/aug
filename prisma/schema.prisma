@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String?                 
+  email                 String?                 @unique
+  password              String?
+  phone                 String?
+  emailVerified         DateTime?
+  image                 String?
+  role                  String                  @default("user")
+  accounts              Account[]
+  transactions          Transactions[]
+  isTwoFactorEnabled    Boolean                 @default(false)
+  TwoFactorConfirmation TwoFactorConfirmation?
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+}
+
+
+
+model Transactions {
+  id                        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId                    String  @db.ObjectId
+  type                      String
+  product                   String
+  status                    String
+  totalTransactionAmount    Float
+  balance                   Float?
+  description               String?
+  category                  String?
+  user                      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sender                    Sender?
+  receiver                  Receiver?
+  date                      DateTime @default(now())
+  @@map("transactions")
+}
+
+
+model Sender {
+  id                                            String  @id @default(auto()) @map("_id") @db.ObjectId
+  senderBankName                                String
+  senderCompany                                 String
+  senderAccountNumber                           String
+  senderAccountName                             String
+  transaction                                   Transactions @relation(fields: [transactionId], references: [id])
+  transactionId                                 String @db.ObjectId @unique
+  @@map("sender")
+}
+
+model Receiver {
+  id                                            String  @id @default(auto()) @map("_id") @db.ObjectId
+  receiverAccountName                             String
+  receiverAccountNumber                           String
+  receiverBankName                                String
+  receiverCompany                                 String
+  transaction                                   Transactions @relation(fields: [transactionId], references: [id])
+  transactionId                                 String @db.ObjectId @unique
+  @@map("receiver")
+}

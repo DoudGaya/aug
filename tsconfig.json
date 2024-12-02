@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es6",
+    "module": "esnext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "allowJs": true,
+    "noEmit": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "electron.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(protected)/user/profile"],
+  "exclude": ["node_modules"]
+}
+
+
+// {
+//   "compilerOptions": {
+//     "lib": ["dom", "dom.iterable", "esnext"],
+//     "target": "es6",
+//     "module": "commonjs",
+//     "module": "esnext",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "outDir": "./dist",
+//     "sourceMap": true,
+//     "allowJs": true,
+//     "noEmit": true,
+//     "moduleResolution": "bundler",
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "jsx": "preserve",
+//     "incremental": true,
+//     "plugins": [
+//       {
+//         "name": "next"
+//       }
+//     ],
+//     "paths": {
+//       "@/*": ["./*"]
+//     }
+//   },
+//   "include": ["next-env.d.ts", "**/*.ts", "electron.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(protected)/user/profile"],
+//   "exclude": ["node_modules"]
+// }
