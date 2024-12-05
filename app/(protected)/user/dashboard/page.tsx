@@ -1,12 +1,19 @@
+import { getAllTransactions } from '@/actions/transactions'
+import { Transactions } from '@prisma/client'
 import React from 'react'
-import { DispatchActionArea } from './_components/DispatchActionArea'
-import { getAllInputDispatch, getAllOutputDispatch } from '@/actions/transactions'
 
 const AdminCasePage = async () => {
 
+
+  const transactions = await getAllTransactions() as Transactions[]
+
   return (
-    <div className='flex h-full'>
-      HEllo World 
+    <div className='flex flex-col space-y-4 h-full'>
+      <div className=" w-full bg-green-200">
+         Hello World
+      </div>
+      <div className=""></div>
+
     </div>
     )
 }
