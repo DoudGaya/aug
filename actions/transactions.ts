@@ -71,8 +71,8 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
         data: {
             product,
             status,
-            balance: parseFloat(balance),
-            totalTransactionAmount: parseFloat(totalTransactionAmount),
+            balance: parseInt(balance),
+            totalTransactionAmount: parseInt(totalTransactionAmount),
             type,
             description,
             category,
