@@ -22,6 +22,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { before } from 'node:test'
+
+const paymentStatus = ['Pending', 'Completed', 'Failed', 'Refunded', 'Cancelled']
 
 export function TransactionForm({ onSubmit }: { onSubmit: (transaction: TransactionsInterface) => void }) {
   const [isPending, setIsPending] = useState(false)
@@ -33,8 +36,8 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
   const form = useForm<z.infer<typeof transactionsSchema>>({
     resolver: zodResolver(transactionsSchema),
     defaultValues: {
-      totalTransactionAmount: "",
-      balance: "",
+      totalTransactionAmount: '',
+      balance: '',
       status: '',
 
       type: '',
@@ -58,13 +61,15 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
   })
 
   async function handleSubmit(values: z.infer<typeof transactionsSchema>) {
+
+    console.log({ before: values })
     setError('')
     setSuccess('')
     setIsPending(true)
     try {
     const data = await createTransaction(values)
-    console.log(data.data)
       await new Promise(resolve => setTimeout(resolve, 1000))
+      // @ts-ignore
       onSubmit(data.data as TransactionsInterface)
       form.reset()
     } catch (error) {
@@ -138,7 +143,7 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
                     </FormControl>
                     <SelectContent>
                       {nigerianBanks.map((bank) => (
-                        <SelectItem key={bank.id} value={bank.id}>{bank.name}</SelectItem>
+                        <SelectItem key={bank.id} value={bank.name}>{bank.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -208,7 +213,7 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
                     </FormControl>
                     <SelectContent>
                       {nigerianBanks.map((bank) => (
-                        <SelectItem className=' dark:text-yellow-200' key={bank.id} value={bank.id}>{bank.name}</SelectItem>
+                        <SelectItem className=' dark:text-yellow-200' key={bank.id} value={bank.name}>{bank.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -216,7 +221,6 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
                 </FormItem>
               )}
             />
-
 
         <FormField
             control={form.control}
@@ -231,14 +235,8 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
               </FormItem>
             )}
           />
-
-
          </div>
          </fieldset>
-        
-         
-
-
 
       <fieldset className=' border-2 rounded-lg  border-yellow-500 flex flex-col items-start text-center w-full p-4'>
         <legend className=' font-poppins text-lg font-semibold px-3 text-yellow-500 self-center'>Order Information</legend>
@@ -251,21 +249,40 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
               <FormItem>
                 <FormLabel className=' dark:text-yellow-200'>Transaction Amount</FormLabel>
                 <FormControl>
-                  <Input disabled={isPending} {...field} />
+                  <Input
+                    disabled={isPending}
+                    {...field}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/,/g, '');
+                      if (!isNaN(Number(value))) {
+                        field.onChange(Number(value).toLocaleString());
+                      }
+                    }}
+                    value={field.value}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
-        <FormField
+          <FormField
             control={form.control}
             name="balance"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className=' dark:text-yellow-200'>Balance (if iny)</FormLabel>
+                <FormLabel className=' dark:text-yellow-200'>Balance</FormLabel>
                 <FormControl>
-                  <Input disabled={isPending} {...field} />
+                  <Input
+                    disabled={isPending}
+                    {...field}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/,/g, '');
+                      if (!isNaN(Number(value))) {
+                        field.onChange(Number(value).toLocaleString());
+                      }
+                    }}
+                    value={field.value}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -273,18 +290,29 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
           />
 
         <FormField
-            control={form.control}
-            name="status"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className=' dark:text-yellow-200'>Paymane Status</FormLabel>
-                <FormControl>
-                  <Input disabled={isPending} {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className=' dark:text-yellow-200'>Paymanet Status</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue className=' dark:text-yellow-200' placeholder="Select Payment Status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {paymentStatus.map((status) => (
+                        <SelectItem className=' dark:text-yellow-200' key={status} value={status}>{status}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+
 
         <FormField
             control={form.control}

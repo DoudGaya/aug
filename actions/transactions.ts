@@ -33,6 +33,9 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
         return { error: "field Validation failed " };
     }
 
+
+    console.log(fieldValidation.data);
+
     const { 
         type,
         product,
@@ -71,8 +74,8 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
         data: {
             product,
             status,
-            balance: parseInt(balance),
-            totalTransactionAmount: parseInt(totalTransactionAmount),
+            balance,
+            totalTransactionAmount,
             type,
             description,
             category,

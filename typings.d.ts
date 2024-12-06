@@ -65,8 +65,8 @@ interface TransactionsInterface {
     type:                      string
     product:                   string
     status:                    string
-    totalTransactionAmount:    Float
-    balance:                   Float
+    totalTransactionAmount:    Number
+    balance:                   Number
     description:               string
     category:                  string  
     sender:                    Sender

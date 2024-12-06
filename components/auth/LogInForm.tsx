@@ -52,7 +52,7 @@ export function LoginForm() {
 
 
   function requestNewOTP (values: z.infer<typeof loginSchema>) {
-    console.log(values)
+    (values)
   }
 
   function onSubmit(values: z.infer<typeof loginSchema>) {

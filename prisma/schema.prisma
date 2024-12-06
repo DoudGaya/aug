@@ -74,8 +74,8 @@ model Transactions {
   type                      String
   product                   String
   status                    String
-  totalTransactionAmount    Int
-  balance                   Int?
+  totalTransactionAmount    String
+  balance                   String?
   description               String?
   category                  String?
   user                      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
