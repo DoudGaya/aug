@@ -1,6 +1,4 @@
-import { stat } from "fs"
 import { z } from "zod"
-
 
 export const SettingsSchema = z.object({
   name: z.optional(z.string()),
@@ -82,7 +80,6 @@ export const loginSchema = z.object({
     balance: z.string(),
     status: z.string(),
     totalTransactionAmount: z.string(),
-    bankName: z.string(),
     category: z.string().optional(),
     description: z.string().optional(),
     sender: senderSchema,

@@ -2,6 +2,8 @@
 import { transactionsSchema } from "@/lib/schema";
 import * as z from "zod";
 import { db } from "@/lib/db";
+import { getUserById } from "@/data/user";
+import { currentUser } from "@/lib/auth";
 
 
 
@@ -11,12 +13,17 @@ export const deleteDispatchById = async (id: string) => {
 
 
 export const getAllTransactions = async () => {
-    const dispatch = await db.transactions.findMany( {
+    const transactions = await db.transactions.findMany( {
+        include: {
+            receiver: true,
+            sender: true,
+            user: true,
+        },
         orderBy: {
          date: "asc"   
         }
     })
-    return dispatch;
+    return transactions;
 }
 
 
@@ -50,6 +57,15 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
 
      } = fieldValidation.data;
 
+
+     const user = await currentUser()
+
+
+     if (!user) {
+        return {error: "Unauthorized"}
+     }
+
+
      const transaction = await db.transactions.create({
         // @ts-ignore
         data: {
@@ -60,6 +76,11 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
             type,
             description,
             category,
+            user: {
+                connect: {
+                    id: user.id,
+                },
+            },
             sender: {
                 create: {
                     senderAccountName,
