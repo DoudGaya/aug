@@ -84,7 +84,7 @@ export function TransactionActionArea({
             <div className="flex flex-col">
               <div className="mb-4 flex flex-col space-y-2">
                <div className=" flex flex-col space-y-1">
-                  <Label htmlFor="search" className='text-base font-poppins dark:text-yellow-200 font-semibold'>Search dispatches</Label>
+                  <Label htmlFor="search" className='text-base font-poppins dark:text-yellow-200 font-semibold'>Search Transactions</Label>
                   <small className=' text-xs dark:text-yellow-100'>(Bank, Balance, receiver's records, sender's records)</small>
                </div>
                 <Input
@@ -96,7 +96,7 @@ export function TransactionActionArea({
                     setSearchTerm(e.target.value)
                     setCurrentPage(1)
                   }}
-                  className="max-w-sm dark:text-yellow-400 outline-yellow-500 border-yellow-500 placeholder:text-yellow-700 w-[350px]"
+                  className="max-w-sm dark:text-yellow-400 outline-yellow-500 border-yellow-500 placeholder:text-yellow-700 md:w-[350px]"
                 />
               </div>
             </div>

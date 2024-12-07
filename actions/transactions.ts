@@ -33,9 +33,6 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
         return { error: "field Validation failed " };
     }
 
-
-    console.log(fieldValidation.data);
-
     const { 
         type,
         product,
@@ -65,8 +62,16 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
 
 
      if (!user) {
-        return {error: "Unauthorized"}
+        return {error: "User does not exist"}
      }
+
+
+    //  const dbUser = await getUserById(user.id);
+
+
+    //  if (!dbUser) {
+    //     return {error: "User does not exist on our database"}
+    //  }
 
 
      const transaction = await db.transactions.create({

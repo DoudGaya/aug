@@ -1,27 +1,22 @@
-import { Calendar, Home, Inbox, Search, Settings,} from "lucide-react"
+import { Calendar, Home, Search, User, User2} from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 
 
 const homes = [
     {
-      title: "Home",
+      title: "Transactions",
       url: "#",
       icon: Home,
     },
     {
-      title: "All Transactions",
-      url: "/user/transactions",
-      icon: Inbox,
+      title: "Create User",
+      url: "/user/create-user",
+      icon: User,
     },
     {
-      title: "Pending Transactions",
-      url: "/user/pending-transactions",
-      icon: Calendar,
-    },
-    {
-      title: "Partial Transactions",
-      url: "/user/partial-transactions",
-      icon: Search,
+      title: "All Users",
+      url: "/user/all-users",
+      icon: User2 ,
     },
   ]
 
@@ -39,6 +34,7 @@ import {
     SidebarMenuItem,
   } from "@/components/ui/sidebar"
 import { DarkButton } from "./DarkButton"
+import { LogOutButton } from "./auth/LogOutButton"
   
   export function AppSidebar() {
     return (
@@ -69,7 +65,11 @@ import { DarkButton } from "./DarkButton"
         </SidebarContent>
         <SidebarFooter className="">
          <div className=" dark:bg-gray-600/50 bg items-center flex justify-between py-1 bg-gray-200 px-3 rounded-lg w-full h-full">
-                <p>Dark Mode</p> 
+                <div>
+                    <LogOutButton>
+                      <span>Logout</span>
+                    </LogOutButton>
+                </div> 
                 <DarkButton />
          </div>
         </SidebarFooter>

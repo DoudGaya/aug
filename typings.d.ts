@@ -42,31 +42,14 @@ interface User {
 
 
 
-// interface TransactionsInterface  {
-
-//     id:                        string
-//     userId:                    string
-//     type:                      string
-//     product:                   string
-//     status:                    string
-//     totalTransactionAmount:    Float
-//     balance:                   Float
-//     description:               string
-//     category:                  string
-//     user:                      User    
-//     sender:                    Sender
-//     receiver:                  Receiver
-//     date:                      DateTime
-// }
-
 interface TransactionsInterface {
     id:                        string   
     userId:                    string
     type:                      string
     product:                   string
     status:                    string
-    totalTransactionAmount:    Number
-    balance:                   Number
+    totalTransactionAmount:    string
+    balance:                   string
     description:               string
     category:                  string  
     sender:                    Sender

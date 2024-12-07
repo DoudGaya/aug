@@ -1,5 +1,4 @@
 import { getAllTransactions } from '@/actions/transactions'
-import { Transactions } from '@prisma/client'
 import React from 'react'
 import { TransactionActionArea } from './_components/TransactionActionArea'
 import { TransactionsInterface } from '@/typings'

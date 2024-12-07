@@ -41,10 +41,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       
       if (!user.id) throw new Error("User ID is missing");
       const existingUser = await getUserById(user.id)
-
       return true
     }, 
-
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub
