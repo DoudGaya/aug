@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch"
 const homes = [
     {
       title: "Transactions",
-      url: "#",
+      url: "/user/dashboard",
       icon: Home,
     },
     {
@@ -34,7 +34,7 @@ import {
     SidebarMenuItem,
   } from "@/components/ui/sidebar"
 import { DarkButton } from "./DarkButton"
-import { LogOutButton } from "./auth/LogOutButton"
+import LogoutButton from "./auth/LogOutButton"
   
   export function AppSidebar() {
     return (
@@ -66,9 +66,7 @@ import { LogOutButton } from "./auth/LogOutButton"
         <SidebarFooter className="">
          <div className=" dark:bg-gray-600/50 bg items-center flex justify-between py-1 bg-gray-200 px-3 rounded-lg w-full h-full">
                 <div>
-                    <LogOutButton>
-                      <span>Logout</span>
-                    </LogOutButton>
+                   <LogoutButton />
                 </div> 
                 <DarkButton />
          </div>

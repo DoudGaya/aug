@@ -17,7 +17,6 @@ export function TransactionCard({ transaction }:{ transaction:TransactionsInterf
        </div>
       </CardHeader>
         <CardContent>
-
           <div className=" flex flex-col space-y-6 px-3">
             <div className=" flex flex-col">              
               <div className=" flex flex-col space-y-2">
