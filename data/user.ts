@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { User } from "lucide-react";
 
 export const getUserByEmail = async (email: string) => {
    try {
@@ -50,7 +51,7 @@ export const getAllUsers = async () => {
     try {
         const users = await db.user.findMany({
             where: {
-                role: "USER"
+                role: "user"
             },
             include: {
                 transactions: true,

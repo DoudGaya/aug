@@ -15,17 +15,13 @@ model User {
   phone                   String?
   emailVerified           DateTime?
   image                   String?
-  role                    UserRole                @default(USER)
+  role                    String            @default("user")
   accounts                Account[]
   transactions            Transactions[]
   isTwoFactorEnabled      Boolean                 @default(false)
   TwoFactorConfirmation   TwoFactorConfirmation?
 }
 
-enum UserRole {
-  USER
-  ADMIN
-}
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
