@@ -8,22 +8,20 @@ import { currentUser } from "@/lib/auth";
 
 
 export const deleteTransactions = async (id: string) => {
-
-
     const transactionExists = await  getTTransactionById(id);
 
     if (!transactionExists) {
         return {error: "Transaction does not exist"}
     }
-    
-    const transaction = await db.transactions.delete({
+
+    await db.transactions.delete({
         where: {
             id,
         }
     })
-
     return {success: "Transaction deleted successfully" }
  }
+
 
 
 
@@ -44,6 +42,31 @@ export const deleteTransactions = async (id: string) => {
 
 export const getAllTransactions = async () => {
     const transactions = await db.transactions.findMany( {
+        include: {
+            receiver: true,
+            sender: true,
+            user: true,
+        },
+        orderBy: {
+         date: "asc"   
+        }
+    })
+    return transactions;
+}
+
+
+export const getMyTransactions = async () => {
+
+    const user = await currentUser()
+
+
+    if (!user) {
+        return {error: "User does not exist"}
+    }
+    const transactions = await db.transactions.findMany( {
+        where: {
+            userId: user.id
+        },
         include: {
             receiver: true,
             sender: true,

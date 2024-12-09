@@ -49,6 +49,9 @@ export const getUserById = async (id: string) => {
 export const getAllUsers = async () => {
     try {
         const users = await db.user.findMany({
+            where: {
+                role: "USER"
+            },
             include: {
                 transactions: true,
             }

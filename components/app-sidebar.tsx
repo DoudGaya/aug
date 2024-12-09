@@ -1,4 +1,4 @@
-import { Calendar, Home, Search, User, User2} from "lucide-react"
+import { Box, Home , Monitor, User2} from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 
 
@@ -9,9 +9,14 @@ const homes = [
       icon: Home,
     },
     {
+      title: "My Transactions",
+      url: "/user/transactions",
+      icon: Monitor,
+    },
+    {
       title: "Create User",
       url: "/user/create-user",
-      icon: User,
+      icon: Box ,
     },
     {
       title: "All Users",

@@ -39,6 +39,7 @@ export const loginSchema = z.object({
       message: "Email must be of type email"
     }),
   })
+
   
 
   export const signUpSchema = z.object({
