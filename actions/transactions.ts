@@ -33,9 +33,6 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
         return { error: "field Validation failed " };
     }
 
-
-    console.log(fieldValidation.data);
-
     const { 
         type,
         product,
@@ -65,8 +62,9 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
 
 
      if (!user) {
-        return {error: "Unauthorized"}
+        return {error: "User does not exist"}
      }
+
 
 
      const transaction = await db.transactions.create({
@@ -103,4 +101,72 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
      }})
 
      return { data: transaction, success: "Check your email to verify your account!" };
+}
+
+
+
+export const updateTransaction = async (id: string, values: z.infer<typeof transactionsSchema>) => {
+    const fieldValidation = transactionsSchema.safeParse(values);
+    if (!fieldValidation.success) {
+        return { error: "field Validation failed " };
+    }
+
+    const { 
+        type,
+        product,
+        totalTransactionAmount,
+        status,
+        description,
+        category,
+        orderStatus,    
+        balance,
+        sender: {
+            senderAccountName,
+            senderAccountNumber,
+            senderBankName,
+            senderCompany,
+        }
+        ,
+        receiver: {
+            receiverAccountName,
+            receiverAccountNumber,
+            receiverBankName,
+            receiverCompany,
+        }
+
+     } = fieldValidation.data;
+
+     const transaction = await db.transactions.update({
+        where: {
+            id
+        },
+        data: {
+            product,
+            status,
+            balance,
+            totalTransactionAmount,
+            type,
+            description,
+            
+            category,
+            sender: {
+                update: {
+                    senderAccountName,
+                    senderAccountNumber,
+                    senderBankName,
+                    senderCompany,
+                },
+            },
+            receiver: {
+                update: {
+                    receiverAccountName,
+                    receiverAccountNumber,
+                    receiverBankName,
+                    receiverCompany,
+                }
+            }
+        }
+     })
+
+     return { data: transaction, success: "Transaction updated successfully" };
 }

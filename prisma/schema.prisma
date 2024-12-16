@@ -73,18 +73,18 @@ model Transactions {
   userId                    String  @db.ObjectId
   type                      String
   product                   String
-  status                    String
+  status                    String @default("Completed")
   totalTransactionAmount    String
   balance                   String?
   description               String?
   category                  String?
+  orderStatus               String?
   user                      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   sender                    Sender?
   receiver                  Receiver?
   date                      DateTime @default(now())
   @@map("transactions")
 }
-
 
 model Sender {
   id                                            String  @id @default(auto()) @map("_id") @db.ObjectId

@@ -23,11 +23,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { TransactionsInterface } from '@/typings'
-import { currentUser } from '@/lib/auth'
 
-const logout = () => {
-  signOut()
-}
+
+
 
 export function TransactionActionArea({
   transactions
@@ -39,6 +37,9 @@ export function TransactionActionArea({
   const [searchTerm, setSearchTerm] = useState('')
 
   const itemsPerPage = 20
+
+
+
 
   const filteredTransactions = transactionList.filter(transaction =>
     transaction?.balance?.toString().includes(searchTerm.toLowerCase()) ||
@@ -59,9 +60,9 @@ export function TransactionActionArea({
   const currentTransactions = filteredTransactions.slice(startIndex, endIndex)
 
   return (
-    <div className="flex flex-col w-full h-screen">
+    <div className="flex flex-col w-full h-[calc(100vh-2rem)]">
       <div className="flex flex-col max-h-min py-0 my-0 border-b drop-shadow-sm px-6 w-full">
-        <div className="w-full items-center flex bg-yellow-200 dark:bg-yellow-900/70 px-6 justify-between py-4 rounded-lg mb-4">
+        <div className="w-full items-center flex dark:bg-yellow-900/70 px-6 justify-between rounded-lg">
           <div className="flex flex-col space-y-8 md:space-y-0 md:flex-row w-full md:justify-between md:items-center">
             <div className="flex space-y-2 flex-col">
               <p className=' font-poppins dark:text-yellow-200 font-semibold'>Transaction Management System</p>
@@ -84,7 +85,7 @@ export function TransactionActionArea({
             <div className="flex flex-col">
               <div className="mb-4 flex flex-col space-y-2">
                <div className=" flex flex-col space-y-1">
-                  <Label htmlFor="search" className='text-base font-poppins dark:text-yellow-200 font-semibold'>Search dispatches</Label>
+                  <Label htmlFor="search" className='text-base font-poppins dark:text-yellow-200 font-semibold'>Search Transactions</Label>
                   <small className=' text-xs dark:text-yellow-100'>(Bank, Balance, receiver's records, sender's records)</small>
                </div>
                 <Input
@@ -96,7 +97,7 @@ export function TransactionActionArea({
                     setSearchTerm(e.target.value)
                     setCurrentPage(1)
                   }}
-                  className="max-w-sm dark:text-yellow-400 outline-yellow-500 border-yellow-500 placeholder:text-yellow-700 w-[350px]"
+                  className="max-w-sm dark:text-yellow-400 outline-yellow-500 border-yellow-500 placeholder:text-yellow-700 md:w-[350px]"
                 />
               </div>
             </div>
@@ -112,7 +113,7 @@ export function TransactionActionArea({
           </div>
         </div>
       </ScrollArea>
-      <div className="flex justify-center py-4 bg-white dark:bg-black border-t">
+      <div className="flex justify-center pt-4 bg-white dark:bg-black border-t">
         <Button
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}

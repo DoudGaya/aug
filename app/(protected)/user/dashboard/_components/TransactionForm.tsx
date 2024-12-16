@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { before } from 'node:test'
+import { FormError } from '@/components/FormError'
 
 const paymentStatus = ['Pending', 'Completed', 'Failed', 'Refunded', 'Cancelled']
 
@@ -39,11 +39,9 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
       totalTransactionAmount: '',
       balance: '',
       status: '',
-
       type: '',
       category: '',
       product: '',
-
       description: '',
       receiver: {
         receiverAccountName: '',
@@ -62,21 +60,27 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
 
   async function handleSubmit(values: z.infer<typeof transactionsSchema>) {
 
-    console.log({ before: values })
     setError('')
     setSuccess('')
     setIsPending(true)
     try {
     const data = await createTransaction(values)
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      // @ts-ignore
-      onSubmit(data.data as TransactionsInterface)
+    if (data.error) {
+      setError(data.error)
+      return
+    } 
+    // @ts-ignore
+    if (data.success) {
+      await onSubmit(data.data as TransactionsInterface)
       form.reset()
+      setIsPending(false)
+      router.refresh()
+    }
+    await new Promise(resolve => setTimeout(resolve, 2000))
     } catch (error) {
       console.error('Error submitting form:', error)
     } finally {
-      setIsPending(false)
-      router.refresh()
+      
     }
   }
 
@@ -372,6 +376,9 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
 
         </div>
         </fieldset>
+
+
+        <FormError message={error} />
 
 
         </div>

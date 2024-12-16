@@ -77,7 +77,8 @@ export const loginSchema = z.object({
   export const transactionsSchema = z.object({
     type: z.string(),
     product: z.string(),
-    balance: z.string(),
+    balance: z.string().optional(),
+    orderStatus: z.string(),
     status: z.string(),
     totalTransactionAmount: z.string(),
     category: z.string().optional(),
