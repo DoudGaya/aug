@@ -94,7 +94,7 @@ export function UpdateTransactionForm({ transaction}: {
 
   return (
     <Form {...form}>
-         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+         <form onSubmit={form.handleSubmit(handleSubmit)} className=" w-full px-0 space-y-8">
            <div className="grid grid-cols-1 gap-4">
             <fieldset className=' border-2 rounded-lg  border-yellow-500 flex flex-col items-start text-center w-full p-4'>
                <legend className=' font-poppins text-lg font-semibold px-3 text-yellow-500 self-center'>Sender's Information</legend>

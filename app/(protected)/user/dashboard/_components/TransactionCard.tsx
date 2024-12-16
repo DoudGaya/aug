@@ -122,9 +122,12 @@ export function TransactionCard({ transaction }:{ transaction:TransactionsInterf
               </div>   
             </div>
             <Separator />
+            <div className=" w-full flex flex-col space-y-2">
+            </div>
             <div className=" flex ">
               <div className=" flex flex-col space-y-3">
                 <p className=" font- font-poppins">Product Details</p>
+                <span> { transaction.orderStatus } </span>
                 <div className=" flex space-x-1 flex-wrap">
                   <span className=" bg-stone-200 px-2 text-xs rounded-lg">{transaction.product}</span>
                   <span className=" bg-stone-200 px-2 text-xs rounded-lg">{transaction.type}</span>
@@ -134,6 +137,26 @@ export function TransactionCard({ transaction }:{ transaction:TransactionsInterf
             </div>
           </div>
         </CardContent>
+
+        <Dialog>
+          <DialogTrigger asChild className=" w-full p-2">
+            <div className="  flex justify-between">
+                <Button className='font-poppins py-1 text-yellow-10'>Update Record</Button>
+                <Button className='font-poppins py-1 bg-transparent text-red-500' variant={'link'}>Update Record</Button>
+            </div>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[700px] w-full h-[80%] md:max-w-xl overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className='py-5 flex text-center bg-yellow-200 dark:bg-yellow-900 rounded-lg justify-center'>
+                <p className='flex items-start text-center font-poppins dark:text-yellow-200 text-yellow-900'>Update Record</p>
+              </DialogTitle>
+            </DialogHeader>
+            <CardFooter className=" w-full">
+                <UpdateTransactionForm transaction={transaction} />
+            </CardFooter>
+            {/* <TransactionForm onSubmit={(data: TransactionsInterface) => setTransaction([...transactions, data])} /> */}
+          </DialogContent>
+        </Dialog>
         {/* <CardFooter className=" flex justify-center"> <Button onClick={ handleDelete() } className=" py-2">Delete</Button> </CardFooter> */}
     </Card>
   )
