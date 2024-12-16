@@ -72,7 +72,7 @@ export function LoginForm() {
   }
 
   return (
-   <div className=" w-full flex h-screen flex-col space-y-6">
+   <div className=" w-full flex flex-col space-y-6">
      <div className="flex items-center justify-center">
     <Image src={logo} alt="logo" className=" rounded-full h-[140px] w-[140px]" width={500} height={500} />
   </div>

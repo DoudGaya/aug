@@ -26,17 +26,16 @@ export const regsiter = async (values: z.infer<typeof signUpSchema>) => {
     if (emailExist) {
         return {error: "User already Exist"}
     }
-
-    await db.user.create({
+  const user =  await db.user.create({
         data: {
             name: fullName,
             email,
             phone,
             password: hashedPassword,
             emailVerified: new Date().toISOString(),
-            role: "user",
+            role: "USER",
         }
     })
 
-    return {success: "User has been created successfully"}
+    return { user: user,  success: "User has been created successfully"}
 }

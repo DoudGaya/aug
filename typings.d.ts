@@ -10,13 +10,36 @@ import { Receiver, Sender } from "@prisma/client"
 // }
 
 
+interface TransactionsInterface {
+    id:                        string   
+    userId:                    string
+    type:                      string
+    product:                   string
+    status:                    string
+    totalTransactionAmount:    string
+    balance:                   string
+    description:               string
+    category:                  string  
+    sender:                    Sender
+    receiver:                  Receiver
+    date:                      Date
+}
 
-interface User {
-    id: string
-    fullName: string
-    email: string
-    password: string
-    image: string
+
+
+
+interface UserWithTransactions {
+    id:                      string  
+    name:                    string  
+    email:                   string
+    password:                string
+    phone:                   string
+    emailVerified:           Date
+    image:                   string
+    role:                    string 
+    isTwoFactorEnabled:      boolean                
+    TwoFactorConfirmation:   string
+    transactions: TransactionsInterface[]
 }
 
 

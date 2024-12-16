@@ -8,19 +8,20 @@ datasource db {
 }
 
 model User {
-  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
-  name                  String?                 
-  email                 String?                 @unique
-  password              String?
-  phone                 String?
-  emailVerified         DateTime?
-  image                 String?
-  role                  String                  @default("user")
-  accounts              Account[]
-  transactions          Transactions[]
-  isTwoFactorEnabled    Boolean                 @default(false)
-  TwoFactorConfirmation TwoFactorConfirmation?
+  id                      String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name                    String?                 
+  email                   String?                 @unique
+  password                String?
+  phone                   String?
+  emailVerified           DateTime?
+  image                   String?
+  role                    String            @default("user")
+  accounts                Account[]
+  transactions            Transactions[]
+  isTwoFactorEnabled      Boolean                 @default(false)
+  TwoFactorConfirmation   TwoFactorConfirmation?
 }
+
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId

@@ -7,13 +7,66 @@ import { currentUser } from "@/lib/auth";
 
 
 
-export const deleteDispatchById = async (id: string) => {
-    const dispatch = await db
+export const deleteTransactions = async (id: string) => {
+    const transactionExists = await  getTTransactionById(id);
+
+    if (!transactionExists) {
+        return {error: "Transaction does not exist"}
+    }
+
+    await db.transactions.delete({
+        where: {
+            id,
+        }
+    })
+    return {success: "Transaction deleted successfully" }
  }
 
 
+
+
+ export const getTTransactionById = async (id: string) => {
+    const transaction = await db.transactions.findUnique({
+        where: {
+            id,
+        },
+        include: {
+            receiver: true,
+            sender: true,
+            user: true,
+        }
+    })
+
+    return transaction;
+ }
+
 export const getAllTransactions = async () => {
     const transactions = await db.transactions.findMany( {
+        include: {
+            receiver: true,
+            sender: true,
+            user: true,
+        },
+        orderBy: {
+         date: "asc"   
+        }
+    })
+    return transactions;
+}
+
+
+export const getMyTransactions = async () => {
+
+    const user = await currentUser()
+
+
+    if (!user) {
+        return {error: "User does not exist"}
+    }
+    const transactions = await db.transactions.findMany( {
+        where: {
+            userId: user.id
+        },
         include: {
             receiver: true,
             sender: true,
@@ -63,6 +116,7 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
 
      if (!user) {
         return {error: "User does not exist"}
+
      }
 
 
