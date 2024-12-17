@@ -26,9 +26,9 @@ import {
 } from "@/components/ui/select"
 import { FormError } from '@/components/FormError'
 
-const paymentStatus = ['Pending', 'Completed', 'Failed', 'Refunded', 'Cancelled']
+const paymentStatus = ['Completed', 'Refunded', 'Cancelled']
 
-const orderStatus = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled']
+const orderStatus = ['Processing', 'Shipped', 'Received', 'Cancelled']
 
 
 
@@ -46,6 +46,7 @@ export function UpdateTransactionForm({ transaction}: {
       totalTransactionAmount: transaction.totalTransactionAmount.toLocaleString(),
       balance: transaction.balance.toLocaleString(),
       status: transaction.status,
+      orderStatus: transaction.orderStatus,
       type: transaction.type,
       category: transaction.category,
       product: transaction.product,
@@ -82,7 +83,7 @@ export function UpdateTransactionForm({ transaction}: {
         // await onSubmit(data.data as TransactionsInterface)
         setSuccess('Transaction updated successfully')
         setIsPending(false)
-        router.refresh()
+        return router.refresh()
       }
     } catch (error) {
       console.error('Error updating transaction:', error)

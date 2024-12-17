@@ -93,7 +93,7 @@ model Sender {
   senderCompany                                 String
   senderAccountNumber                           String
   senderAccountName                             String
-  transaction                                   Transactions @relation(fields: [transactionId], references: [id])
+  transaction                                   Transactions @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   transactionId                                 String @db.ObjectId @unique
   @@map("sender")
 }
@@ -104,7 +104,7 @@ model Receiver {
   receiverAccountNumber                           String
   receiverBankName                                String
   receiverCompany                                 String
-  transaction                                   Transactions @relation(fields: [transactionId], references: [id])
+  transaction                                   Transactions @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   transactionId                                 String @db.ObjectId @unique
   @@map("receiver")
 }

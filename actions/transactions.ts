@@ -17,6 +17,10 @@ export const deleteTransactions = async (id: string) => {
     await db.transactions.delete({
         where: {
             id,
+        },
+        include: {
+            receiver: true,
+            sender: true,
         }
     })
     return {success: "Transaction deleted successfully" }
@@ -201,7 +205,7 @@ export const updateTransaction = async (id: string, values: z.infer<typeof trans
             totalTransactionAmount,
             type,
             description,
-            
+            orderStatus,
             category,
             sender: {
                 update: {

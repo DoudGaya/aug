@@ -25,6 +25,7 @@ import {
 import { FormError } from '@/components/FormError'
 
 const paymentStatus = ['Pending', 'Completed', 'Failed', 'Refunded', 'Cancelled']
+const orderStatus = ['Processing', 'Shipped', 'Received', 'Cancelled']
 
 export function TransactionForm({ onSubmit }: { onSubmit: (transaction: TransactionsInterface) => void }) {
   const [isPending, setIsPending] = useState(false)
@@ -39,6 +40,7 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
       totalTransactionAmount: '',
       balance: '',
       status: '',
+      orderStatus: '',
       type: '',
       category: '',
       product: '',
@@ -225,20 +227,6 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
                 </FormItem>
               )}
             />
-
-        <FormField
-            control={form.control}
-            name="receiver.receiverAccountNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className=' dark:text-yellow-200'>Receiver Account Number</FormLabel>
-                <FormControl>
-                    <Input disabled={isPending} {...field} placeholder="Type your message here." />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
          </div>
          </fieldset>
 
@@ -316,6 +304,29 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
               )}
             />
 
+        <FormField
+              control={form.control}
+              name="orderStatus"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className=' dark:text-yellow-200'>Order Status</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue className=' dark:text-yellow-200' placeholder="Select Order Status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {orderStatus.map((status) => (
+                        <SelectItem className=' dark:text-yellow-200' key={status} value={status}>{status}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
 
 
         <FormField
@@ -338,20 +349,6 @@ export function TransactionForm({ onSubmit }: { onSubmit: (transaction: Transact
             render={({ field }) => (
               <FormItem>
                 <FormLabel className=' dark:text-yellow-200'>Product Type</FormLabel>
-                <FormControl>
-                  <Input disabled={isPending} {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-        <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className=' dark:text-yellow-200'>Product Category</FormLabel>
                 <FormControl>
                   <Input disabled={isPending} {...field} />
                 </FormControl>

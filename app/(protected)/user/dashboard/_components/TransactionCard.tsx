@@ -4,6 +4,20 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Separator } from "@/components/ui/separator"
 import { TransactionsInterface } from "@/typings"
 import { useRouter } from "next/navigation"
+import { useToast } from "@/hooks/use-toast"
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 import {
   Dialog,
   DialogContent,
@@ -13,6 +27,7 @@ import {
 } from "@/components/ui/dialog"
 
 import { UpdateTransactionForm } from "./UpdateTransactionForm"
+import { deleteTransactions } from "@/actions/transactions"
 
 
 
@@ -23,18 +38,31 @@ export function TransactionCard({ transaction }:{ transaction:TransactionsInterf
 
   const router = useRouter()
 
-  const deleteTRansaction = async ( id: string ) => {
+  const {toast} = useToast()
 
-    await deleteTRansaction( id ) 
-
+  const deleteCard = () => {
+    handleDelete(transaction.id)
   }
 
 
-  const handleDelete = ( id: string) => { 
-    deleteTRansaction(id)
+  const handleDelete = async (id: string) => {
+    await deleteTransactions(id)
     router.refresh()
-    return {success: "Item Deleted"}
+    toast({
+      title: "Transaction Deleted",
+      description: "Transaction has been successfully deleted",
+    })
   }
+
+
+  // const handleDelete = ( id: string) => { 
+  //   deleteTRansaction(id)
+
+  //   toast({
+  //     title: "Transaction Deleted",
+    
+  //   })
+  // }
 
 
   return (
@@ -43,6 +71,12 @@ export function TransactionCard({ transaction }:{ transaction:TransactionsInterf
        <div className=" w-full flex flex-col justify-center items-center text-center py-6 px-3  ">
        <h2 className={`text-2xl font-poppins ${transaction.status == "Pending" ? " text-yellow-500" : transaction.status == "Completed" ? " text-green-500" : transaction.status == "Canceled" ? " text-red-600" : " text-green-500"} font-bold`}> { transaction.status || "Completed" }</h2>
        <small className="  text-xs font-semibold "> ({ transaction.date.toDateString() }) </small>
+        <div className=" flex w-full justify-center items-center text-center py-3">
+              <span className={` ${ transaction.orderStatus === 'Shipped' ? 'bg-green-500' : transaction.orderStatus === 'Processing' ? 'bg-yellow-400' : transaction.orderStatus === 'Received' ? ' bg-green-700 text-white' : " bg-gray-300 dark:bg-gray-800" } text-xs px-3 py-0.5 rounded-full font-semibold font-poppins `}> { transaction?.orderStatus } </span>
+          </div>
+       {/* <div className=" flex w-full py-3">
+            <span className={` ${ transaction.orderStatus === 'Shipped' ? 'bg-green-500' : transaction.orderStatus === 'Processing' ? 'bg-yellow-600' : transaction.orderStatus === 'Recieved' ? '' : "" } text-xs rounded-lg `}> { transaction?.orderStatus } </span>
+        </div>   */}
        </div>
       </CardHeader>
         <CardContent>
@@ -122,16 +156,15 @@ export function TransactionCard({ transaction }:{ transaction:TransactionsInterf
               </div>   
             </div>
             <Separator />
-            <div className=" w-full flex flex-col space-y-2">
+            <div className=" w-full flex flex-col justify-center">
             </div>
-            <div className=" flex ">
+            <div className=" flex rounded-lg">
               <div className=" flex flex-col space-y-3">
-                <p className=" font- font-poppins">Product Details</p>
-                <span> { transaction.orderStatus } </span>
+                <p className="  font-poppins">Product Details</p>
+              
                 <div className=" flex space-x-1 flex-wrap">
-                  <span className=" bg-stone-200 px-2 text-xs rounded-lg">{transaction.product}</span>
-                  <span className=" bg-stone-200 px-2 text-xs rounded-lg">{transaction.type}</span>
-                  <span className=" bg-stone-200 px-2 text-xs rounded-lg">{transaction.category}</span>
+                  <span className=" bg-stone-200 dark:bg-gray-800 px-2 text-xs rounded-lg">{transaction.product}</span>
+                  <span className=" bg-stone-200 dark:bg-gray-800 px-2 text-xs rounded-lg">{transaction.type}</span>
                 </div>
               </div>   
             </div>
@@ -139,12 +172,35 @@ export function TransactionCard({ transaction }:{ transaction:TransactionsInterf
         </CardContent>
 
         <Dialog>
-          <DialogTrigger asChild className=" w-full p-2">
-            <div className="  flex justify-between">
+            <div className="  flex justify-between w-full p-2">
+          <DialogTrigger asChild className=" ">
                 <Button className='font-poppins py-1 text-yellow-10'>Update Record</Button>
-                <Button className='font-poppins py-1 bg-transparent text-red-500' variant={'link'}>Update Record</Button>
-            </div>
           </DialogTrigger>
+
+
+            <AlertDialog>
+              <AlertDialogTrigger>
+                  <p className='font-poppins py-1 bg-transparent text-red-500 px-3 underline' >Delete Record</p>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete your transaction.
+
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="">Cancel</AlertDialogCancel>
+                  <AlertDialogAction className=" bg-red-300 text-red-700 hover:bg-red-400"> 
+                    <button className="" onClick={deleteCard}>Yes Delete</button>
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+
+
+            </div>
           <DialogContent className="sm:max-w-[700px] w-full h-[80%] md:max-w-xl overflow-y-auto">
             <DialogHeader>
               <DialogTitle className='py-5 flex text-center bg-yellow-200 dark:bg-yellow-900 rounded-lg justify-center'>
