@@ -52,7 +52,7 @@ export const getAllTransactions = async () => {
             user: true,
         },
         orderBy: {
-         date: "asc"   
+         date: "desc"   
         }
     })
     return transactions;
