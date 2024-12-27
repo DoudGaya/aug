@@ -96,6 +96,7 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
         totalTransactionAmount,
         status,
         description,
+        orderStatus,
         category,
         balance,
         sender: {
@@ -133,6 +134,7 @@ export async function createTransaction(values: z.infer<typeof transactionsSchem
             balance,
             totalTransactionAmount,
             type,
+            orderStatus,
             description,
             category,
             user: {
