@@ -62,7 +62,7 @@ export function TransactionActionArea({
     <div className="flex flex-col w-full h-screen">
       <div className="flex flex-col max-h-min py-0 my-0 border-b drop-shadow-sm px-6 w-full">
         <div className="w-full items-center flex bg-yellow-200 dark:bg-yellow-900/70 px-6 justify-between py-4 rounded-lg mb-4">
-          <div className="flex flex-col space-y-8 md:space-y-0 md:flex-row w-full md:justify-between md:items-center">
+          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row w-full md:justify-between md:items-center">
             <div className="flex space-y-2 flex-col">
               <p className=' font-poppins dark:text-yellow-200 font-semibold'>Transaction Management System</p>
               <div className="flex space-x-2">
