@@ -9,7 +9,7 @@ const AdminCasePage = async () => {
   return (
     <div className='flex flex-col space-y-4 w-full'>
         <div className=" w-full">
-            <TransactionActionArea transactions={transactions} />
+            <TransactionActionArea transactions={transactions} /> 
         </div>
     </div>
     )
